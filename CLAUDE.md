@@ -20,6 +20,10 @@ Skill descriptions use third-person perspective ("Creates a new skill" not "Crea
 
 Instructions within SKILL.md bodies use imperative form ("Read the template" not "The agent should read the template"). Imperative form is direct, unambiguous, and mirrors how effective prompts are written for language models.
 
+### File Reference Convention
+
+When a SKILL.md body points to a reference, template, or example file, use markdown link syntax (`[Descriptive Title](references/file-name.md)`) rather than backtick code spans (`` `references/file-name.md` ``). Markdown links are semantically richer — the link text conveys what the file contains, while the path tells Claude where to find it. This improves context comprehension when Claude loads referenced material.
+
 ### Validation
 
 Every skill should be validatable by `scripts/validate_skill.py` within its own directory or via the create-skills skill's validator. Validation catches structural issues early and enforces conventions automatically.
@@ -35,3 +39,4 @@ Every skill should be validatable by `scripts/validate_skill.py` within its own 
 | 2026-02-24 | Explanation-focused writing over good/bad lists | Readers internalize WHY behind conventions, enabling better judgment on edge cases |
 | 2026-02-24 | Lean SKILL.md with reference delegation | Keeps the primary instruction file scannable; deep knowledge lives in dedicated references |
 | 2026-02-24 | Python validation scripts per skill | Automated checks enforce conventions without relying on manual review |
+| 2026-02-24 | Markdown links for file references over backtick paths | Link text conveys purpose, not just location; improves Claude's context comprehension when loading references |
