@@ -16,6 +16,7 @@ triggers:
 
   Use imperative form for instructions ("Read the file" not "The agent should read").
   Avoid second-person pronouns in the body.
+  Use markdown links for file references: [Title](references/file.md) not `references/file.md`.
 -->
 
 # {{SKILL_NAME}}
@@ -32,9 +33,9 @@ Determine the task requirements by reading the user's request.
 
 ### Step 2: Execute
 
-<!-- What actions does Claude take? Point to references for deep knowledge. -->
+<!-- What actions does Claude take? Point to references using markdown links. -->
 
-Perform the main task. Consult `references/` files for detailed guidance on specific aspects.
+Perform the main task. Consult [Reference Name](references/reference-name.md) for detailed guidance on specific aspects.
 
 ### Step 3: Validate
 

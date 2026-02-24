@@ -37,13 +37,14 @@ Read the git log for the determined range.
 ### Step 2: Parse Commits
 
 Classify each commit using conventional commit format (feat, fix, chore, etc.).
-Consult `references/conventional-commits.md` for parsing rules and edge cases.
+<!-- Use markdown links for file references: [Title](path) not backtick `path`. -->
+Consult [Conventional Commits](references/conventional-commits.md) for parsing rules and edge cases.
 
 Group commits by type. Within each group, sort by scope alphabetically.
 
 ### Step 3: Generate Changelog
 
-Read `templates/changelog-template.md` for the output format.
+Read [Changelog Template](templates/changelog-template.md) for the output format.
 
 Generate the changelog entry with:
 - Version heading with date

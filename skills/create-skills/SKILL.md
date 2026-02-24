@@ -37,15 +37,15 @@ python scripts/init_skill.py <skill-name>
 
 ### Step 3: Write the Skill
 
-Read `references/skill-writing-guide.md` for writing principles and conventions.
-Read `references/frontmatter-spec.md` for all available frontmatter fields.
+Read [Skill Writing Guide](references/skill-writing-guide.md) for writing principles and conventions.
+Read [Frontmatter Spec](references/frontmatter-spec.md) for all available frontmatter fields.
 
 Fill in the generated SKILL.md:
 - Set frontmatter fields (name, description in third-person, version, triggers)
 - Write a lean body with imperative instructions
 - Delegate deep knowledge to files in `references/`
 
-Read `examples/example-skill.md` to see these principles applied to a concrete skill.
+Read [Example Skill](examples/example-skill.md) to see these principles applied to a concrete skill.
 
 ### Step 4: Validate
 
@@ -55,7 +55,7 @@ Run the validation script against the skill directory:
 python scripts/validate_skill.py <path-to-skill-dir>
 ```
 
-Read `references/validation-rules.md` to understand each check and its rationale.
+Read [Validation Rules](references/validation-rules.md) to understand each check and its rationale.
 
 Address any FAIL results immediately. Review WARN results and fix those that apply.
 
@@ -77,7 +77,7 @@ python scripts/validate_skill.py <path-to-skill-dir>
 
 ### Step 3: Report
 
-Present the structured PASS/WARN/FAIL report. For each warning or failure, explain the reasoning (consult `references/validation-rules.md`) and suggest a specific fix.
+Present the structured PASS/WARN/FAIL report. For each warning or failure, explain the reasoning (consult [Validation Rules](references/validation-rules.md)) and suggest a specific fix.
 
 ## Workflow: Improve a Skill
 
@@ -87,7 +87,7 @@ Run validation on the existing skill to establish a baseline.
 
 ### Step 2: Identify Improvements
 
-Compare the skill against the principles in `references/skill-writing-guide.md`. Look for:
+Compare the skill against the principles in [Skill Writing Guide](references/skill-writing-guide.md). Look for:
 - Body content that should be delegated to references
 - Missing trigger phrases
 - Frontmatter gaps

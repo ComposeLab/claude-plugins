@@ -71,6 +71,8 @@ The reason for separate reference files rather than one large document is contex
 
 Naming conventions for reference files use descriptive kebab-case names that indicate their content: `skill-writing-guide.md`, `frontmatter-spec.md`, `validation-rules.md`. This makes it easy for both Claude and human authors to find the right file.
 
+When the SKILL.md body points Claude to a reference, template, or example file, use markdown link syntax — `[Descriptive Title](references/file-name.md)` — rather than backtick code spans like `` `references/file-name.md` ``. Markdown links are semantically richer: the link text conveys what the file contains, while the path tells Claude where to find it. This matters because Claude uses the link text as a signal for what knowledge it is about to load, improving context comprehension. Backtick paths only communicate location, forcing Claude to infer purpose from the filename alone.
+
 ## Templates
 
 Templates in `templates/` provide starter content with placeholders. They reduce the cognitive load of creating a new file from scratch and ensure consistent structure across skills.
