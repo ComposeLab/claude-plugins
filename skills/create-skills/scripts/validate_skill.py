@@ -166,15 +166,20 @@ def check_body_quality(body: str, result: ValidationResult):
         result.passed("imperative-form", "Instructions use imperative form")
 
 
+def _strip_code_blocks(text: str) -> str:
+    """Remove fenced code blocks from text. Code blocks contain command examples, not file references."""
+    return re.sub(r'```.*?```', '', text, flags=re.DOTALL)
+
+
 def check_referenced_files(skill_dir: Path, body: str, result: ValidationResult):
     """Check that files referenced in the body actually exist."""
     # Match patterns like references/foo.md, templates/bar.md, scripts/baz.py, examples/qux.md
     ref_pattern = re.compile(r'(?:references|templates|examples|scripts)/[a-zA-Z0-9_-]+\.\w+')
-    referenced = set(ref_pattern.findall(body))
 
-    # Also check frontmatter area by reading full file
+    # Strip code blocks before matching — code blocks contain command examples, not file references
     full_text = (skill_dir / "SKILL.md").read_text()
-    referenced.update(ref_pattern.findall(full_text))
+    clean_text = _strip_code_blocks(full_text)
+    referenced = set(ref_pattern.findall(clean_text))
 
     if not referenced:
         result.warn("referenced-files", "No file references detected in SKILL.md")
@@ -213,6 +218,54 @@ def check_no_comparison_patterns(skill_dir: Path, result: ValidationResult):
         result.passed("no-comparison-patterns", "No good/bad comparison patterns detected")
 
 
+def check_test_files_exist(skill_dir: Path, result: ValidationResult):
+    """Check that the skill has test files in tests/."""
+    tests_dir = skill_dir / "tests"
+    if not tests_dir.is_dir():
+        result.warn("test-files-exist", "No tests/ directory found — consider adding test scenarios")
+        return
+
+    test_files = list(tests_dir.glob("test_*.yaml")) + list(tests_dir.glob("test_*.yml"))
+    if test_files:
+        result.passed("test-files-exist", f"Found {len(test_files)} test file(s) in tests/")
+    else:
+        result.warn("test-files-exist", "No test_*.yaml files found in tests/ — consider adding test scenarios")
+
+
+def check_integration_tests(skill_dir: Path, result: ValidationResult):
+    """Warn if references contain import statements but no Python test files exist."""
+    refs_dir = skill_dir / "references"
+    if not refs_dir.is_dir():
+        return
+
+    # Check if any reference file contains Python import statements in code blocks
+    import_pattern = re.compile(r'^\s*(?:from\s+\S+\s+import|import\s+\S+)', re.MULTILINE)
+    code_block_pattern = re.compile(r'```(?:python|py)?\s*\n(.*?)```', re.DOTALL)
+
+    has_imports = False
+    for md_file in refs_dir.glob("*.md"):
+        content = md_file.read_text()
+        for block_match in code_block_pattern.finditer(content):
+            block_content = block_match.group(1)
+            if import_pattern.search(block_content):
+                has_imports = True
+                break
+        if has_imports:
+            break
+
+    if not has_imports:
+        return
+
+    # References contain import statements — check for Python test files
+    tests_dir = skill_dir / "tests"
+    py_tests = list(tests_dir.glob("test_*.py")) if tests_dir.is_dir() else []
+
+    if py_tests:
+        result.passed("integration-tests", f"Found {len(py_tests)} integration test file(s) for library skill")
+    else:
+        result.warn("integration-tests", "References contain Python imports but no integration test files (test_*.py) found in tests/ — consider adding integration tests to verify documented APIs work")
+
+
 def main():
     parser = argparse.ArgumentParser(description="Validate a Claude Code skill directory.")
     parser.add_argument("skill_dir", help="Path to the skill directory to validate")
@@ -243,6 +296,8 @@ def main():
     check_body_quality(body, result)
     check_referenced_files(skill_dir, body, result)
     check_no_comparison_patterns(skill_dir, result)
+    check_test_files_exist(skill_dir, result)
+    check_integration_tests(skill_dir, result)
 
     print()
     success = result.print_report()

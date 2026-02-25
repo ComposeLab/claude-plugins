@@ -32,7 +32,7 @@ Determine the skill name, purpose, and key triggers from the user's request. Con
 Run `scripts/init_skill.py` with the skill name to scaffold the directory structure and generate a starter SKILL.md from the template.
 
 ```
-python scripts/init_skill.py <skill-name>
+python skills/create-skills/scripts/init_skill.py <skill-name>
 ```
 
 ### Step 3: Write the Skill
@@ -47,21 +47,50 @@ Fill in the generated SKILL.md:
 
 Read [Example Skill](examples/example-skill.md) to see these principles applied to a concrete skill.
 
-### Step 4: Validate
+### Step 4: Verify References
+
+When a skill documents an external library, verify reference accuracy against the actual source code before validating. Check that:
+- Import paths work (e.g., `from mq import Bus` is a real export)
+- Method signatures match the library's actual API
+- Config fields and options exist in the library's config models
+
+Read the library's source, its `__init__.py` exports, and its own examples or tests. If a reference claims something is importable, confirm it. This step prevents skills from documenting APIs that do not exist.
+
+### Step 5: Validate
 
 Run the validation script against the skill directory:
 
 ```
-python scripts/validate_skill.py <path-to-skill-dir>
+python skills/create-skills/scripts/validate_skill.py <path-to-skill-dir>
 ```
 
 Read [Validation Rules](references/validation-rules.md) to understand each check and its rationale.
 
 Address any FAIL results immediately. Review WARN results and fix those that apply.
 
-### Step 5: Iterate
+### Step 6: Iterate
 
-Present the validation report to the user. If issues remain, return to Step 3 with targeted fixes. Once validation passes cleanly, summarize what was created.
+Present the validation report to the user. If issues remain, return to Step 3 with targeted fixes. Once validation passes cleanly, proceed to testing.
+
+### Step 7: Scenario Test
+
+Create a `tests/test_scenarios.yaml` with test cases covering the skill's key behaviors. Read [Test Writing Guide](references/test-writing-guide.md) for the YAML format, config options, and guidance on writing effective prompts and criteria.
+
+Run the test suite:
+
+```
+python skills/create-skills/scripts/test_skill.py <path-to-skill-dir>
+```
+
+Review the results. If tests fail, examine the generation output and evaluation reasoning, then iterate on the skill instructions or test criteria.
+
+### Step 8: Integration Test
+
+If the skill documents an external library with importable APIs, write integration tests that exercise the real library. Read [Integration Testing Guide](references/integration-testing-guide.md) for when integration tests are needed and how to structure them.
+
+Scenario tests verify that the skill guides correctly. Integration tests verify that the documented APIs actually work. Both are needed for skills that reference external code — scenario tests alone can pass even when import paths are wrong.
+
+Once both test types pass, summarize what was created.
 
 ## Workflow: Validate an Existing Skill
 
@@ -72,7 +101,7 @@ Identify the skill directory path from the user's request.
 ### Step 2: Run Validation
 
 ```
-python scripts/validate_skill.py <path-to-skill-dir>
+python skills/create-skills/scripts/validate_skill.py <path-to-skill-dir>
 ```
 
 ### Step 3: Report

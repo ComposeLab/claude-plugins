@@ -73,6 +73,18 @@ Naming conventions for reference files use descriptive kebab-case names that ind
 
 When the SKILL.md body points Claude to a reference, template, or example file, use markdown link syntax — `[Descriptive Title](references/file-name.md)` — rather than backtick code spans like `` `references/file-name.md` ``. Markdown links are semantically richer: the link text conveys what the file contains, while the path tells Claude where to find it. This matters because Claude uses the link text as a signal for what knowledge it is about to load, improving context comprehension. Backtick paths only communicate location, forcing Claude to infer purpose from the filename alone.
 
+## References for External Libraries
+
+When a skill documents an external library, the references should reflect the library's intended user experience — not its internal architecture. The guiding principle: document what users import, configure, and call, not how the library implements things behind the scenes.
+
+This distinction matters because libraries are designed with a public API that hides complexity. If a message queue library's purpose is simplicity — YAML config plus three imports — then the skill references should reflect that simplicity. Documenting internal adapter classes, submodule import paths, or private methods works against the library's design intent and creates references that are both harder to follow and more likely to break.
+
+To find the intended user experience, check the library's own README, getting-started guides, and example code. These show what the maintainers consider the stable, supported API. If the library's examples use `from mq import Bus`, that is the import path to document — not `from mq.core.bus import Bus` even if that also works.
+
+Reference files for library skills should follow a simple test: could a user read this reference and write working code without looking at the library's source? If the reference mentions internal classes the user never instantiates or submodule paths the user never imports, it has gone too deep.
+
+When in doubt, document less. Users who need internals will read the library's source. The skill's job is to make the common case obvious and correct.
+
 ## Templates
 
 Templates in `templates/` provide starter content with placeholders. They reduce the cognitive load of creating a new file from scratch and ensure consistent structure across skills.
@@ -110,6 +122,16 @@ Explanation-focused writing teaches the underlying principle. When an author und
 
 This style requires more writing effort upfront but produces documentation that ages better and handles novel situations gracefully.
 
+## Testing
+
+Validation checks that a skill is structurally correct — valid frontmatter, files exist, conventions followed. Testing checks that a skill actually works when Claude uses it. These are complementary: a skill can pass validation perfectly and still produce poor results because its instructions are ambiguous or incomplete.
+
+Test scenarios exercise the skill by sending a prompt to Claude with the skill loaded as context, then evaluating the response against expected criteria. Each test case defines a user prompt (what someone might ask the skill to do) and a list of criteria (what the response should demonstrate). The test runner handles the generation and evaluation automatically using the Claude Agent SDK.
+
+A skill should have tests covering each main workflow or capability. For a skill with three workflows, write at least one test per workflow. For complex workflows with branching logic, consider additional tests for the important branches. The goal is confidence that Claude follows the skill's instructions correctly, not exhaustive coverage of every edge case.
+
+Test files live in `tests/test_scenarios.yaml` within the skill directory. The detailed YAML format, config options, and guidance on writing effective tests are in [Test Writing Guide](references/test-writing-guide.md).
+
 ## Putting It All Together
 
 A well-structured skill has:
@@ -119,5 +141,6 @@ A well-structured skill has:
 - Templates that provide starting structure with placeholders
 - Examples that show the concepts applied in practice
 - Validation that catches structural and quality issues automatically
+- Tests that verify the skill produces correct behavior when Claude uses it
 
 Each piece serves a distinct purpose. The body is the conductor; references are the musicians; templates are the sheet music; examples are recordings of performances; validation is the tuner making sure everything is in key.

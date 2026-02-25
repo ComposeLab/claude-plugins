@@ -59,3 +59,48 @@ Verify every commit from the range appears in the output.
 Present the changelog and ask if adjustments are needed.
 
 If the user approves, write the content to CHANGELOG.md (prepend to existing content if the file exists).
+
+<!--
+  Test scenarios live in tests/test_scenarios.yaml. Here is what a test suite
+  for this skill would look like. Each test targets one workflow or capability.
+
+  This skill is a workflow skill — it orchestrates git commands and text formatting
+  but does not document an external library's API. Therefore, scenario tests are
+  sufficient. If this skill documented a library (e.g., a git parsing library with
+  importable classes), it would also need integration tests in tests/test_*_integration.py
+  that verify the documented imports, method signatures, and config formats work.
+  See references/integration-testing-guide.md for when integration tests are needed.
+-->
+
+## Example Test Suite
+
+```yaml
+suite: format-changelog-scenarios
+skill_path: ..
+
+config:
+  model: haiku
+  max_turns: 5
+  max_budget_usd: 0.50
+
+tests:
+  - name: skill guides determining commit scope
+    prompt: "I want to generate a changelog but I'm not sure what range of commits to include. How do I decide?"
+    expected:
+      - "Mentions using the version range or commits since the last tag"
+      - "Explains how to determine the scope of commits to include"
+
+  - name: skill parses conventional commits
+    prompt: "How does the skill classify commits? What format does it expect?"
+    expected:
+      - "Mentions conventional commit format (feat, fix, chore, etc.)"
+      - "References grouping commits by type"
+      - "Mentions handling commits that don't match conventional format"
+
+  - name: skill generates formatted output
+    prompt: "Generate a changelog for my project. Walk me through what the output looks like."
+    expected:
+      - "Describes version heading with date"
+      - "Mentions grouped sections like Features and Bug Fixes"
+      - "Mentions omitting empty sections"
+```
