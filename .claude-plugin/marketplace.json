@@ -1,0 +1,18 @@
+{
+  "name": "compose-lab",
+  "owner": {
+    "name": "ComposeLab"
+  },
+  "metadata": {
+    "description": "Internal plugins for ComposeLab projects",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "core-usage",
+      "source": "./plugins/core-usage",
+      "description": "Skills for working with internal core libraries (core-db, etc.)",
+      "version": "1.0.0"
+    }
+  ]
+}
