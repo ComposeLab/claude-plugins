@@ -1,5 +1,5 @@
 {
   "name": "core-usage",
-  "description": "Skills for working with internal core libraries (core-db, etc.)",
-  "version": "1.0.0"
+  "description": "Skills for working with internal core libraries (core-db, core-mq, etc.)",
+  "version": "1.1.0"
 }

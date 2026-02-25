@@ -1,0 +1,49 @@
+suite: core-mq-scenarios
+skill_path: ..
+
+config:
+  model: haiku
+  max_turns: 5
+  max_budget_usd: 0.50
+
+tests:
+  - name: skill can guide pub/sub messaging
+    prompt: "I want to broadcast order events to multiple listeners using mq"
+    expected:
+      - "Uses Bus.publish() for sending messages"
+      - "Uses @Bus.subscriber() or bus.on() for receiving messages"
+      - "Mentions fire-and-forget nature or that pub/sub does not guarantee delivery"
+
+  - name: skill can guide stream messaging
+    prompt: "I need guaranteed delivery of order messages with consumer groups using mq"
+    expected:
+      - "Uses Bus.send() for appending messages to a stream"
+      - "Uses @Bus.stream_handler() or bus.on_stream() for consuming"
+      - "Mentions consumer groups for at-least-once delivery"
+
+  - name: skill can guide delayed messaging
+    prompt: "How do I schedule a message for delivery in 5 minutes using mq?"
+    expected:
+      - "Uses Bus.publish_delayed() with delay_seconds parameter"
+      - "Mentions Bus.publish_at() for absolute time scheduling"
+
+  - name: skill can guide YAML configuration
+    prompt: "How do I configure mq with a Redis broker for my project?"
+    expected:
+      - "Shows YAML config with brokers section"
+      - "Shows buses section with broker reference"
+      - "References MQ_CONFIG_PATH environment variable"
+
+  - name: skill can guide error handling and retry
+    prompt: "How does retry and error handling work in mq streams?"
+    expected:
+      - "Explains automatic retry with exponential backoff for stream handlers"
+      - "Mentions configuring retry and dlq in YAML"
+      - "Advises letting handler exceptions propagate for retry to work"
+
+  - name: skill can guide application lifecycle
+    prompt: "How do I properly start and shut down mq buses in my application?"
+    expected:
+      - "Calls setup_bus_factory() before getting buses"
+      - "Registers handlers before calling start()"
+      - "Closes buses on shutdown with Bus.close_all()"

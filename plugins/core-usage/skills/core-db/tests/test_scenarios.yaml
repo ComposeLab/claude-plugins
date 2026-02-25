@@ -1,0 +1,70 @@
+suite: core-db-scenarios
+skill_path: ..
+
+config:
+  model: haiku
+  max_turns: 5
+  max_budget_usd: 0.50
+
+tests:
+  - name: skill can guide creating a new model
+    prompt: "I need to create a User model with name and email fields using core-db"
+    expected:
+      - "Uses BaseModal as the base class"
+      - "Includes __tablename__ declaration"
+      - "Uses SQLAlchemy 2.0+ Mapped type hints"
+      - "Does not redeclare inherited fields like id, created_at, updated_at"
+
+  - name: skill can guide write operations
+    prompt: "How do I save a new user to the database with core-db?"
+    expected:
+      - "Uses UnitOfWork as async context manager"
+      - "Calls await uow.commit() before context exits"
+      - "Accesses operations through uow.repo"
+
+  - name: skill can guide read operations
+    prompt: "How do I query for a user by ID using core-db?"
+    expected:
+      - "Uses ViewManager as async context manager"
+      - "Shows get_by_id method for fetching by primary key"
+
+  - name: skill can guide filtering
+    prompt: "How do I filter database query results with conditions like greater than or less than?"
+    expected:
+      - "Shows filter operators like __gt, __gte, __lt, __lte, __ne, __in"
+      - "Demonstrates filter usage in a query context"
+
+  - name: skill can guide pagination
+    prompt: "How do I paginate through a large list of results?"
+    expected:
+      - "References CursorPaginationResult"
+      - "Explains next_cursor and has_next_page fields"
+      - "Mentions order_by parameter for cursor pagination"
+
+  - name: skill can guide error handling
+    prompt: "What exceptions should I handle when working with core-db?"
+    expected:
+      - "Mentions EntityNotFoundException for missing records"
+      - "Mentions DuplicateEntityException for unique constraint violations"
+      - "References CoreDBException as the base exception class"
+
+  - name: skill can guide configuration
+    prompt: "How do I configure core-db for my project?"
+    expected:
+      - "References CONFIG_PATH or db_config.yaml"
+      - "Mentions postgresql and sqlite as supported databases"
+      - "References pool_size configuration"
+
+  - name: skill can guide upsert operations
+    prompt: "How do I insert a record or update it if it already exists?"
+    expected:
+      - "Shows upsert method usage"
+      - "Explains conflict_columns parameter"
+      - "Explains update_columns parameter"
+
+  - name: skill can guide bulk operations
+    prompt: "How do I perform bulk insert, update, or delete operations?"
+    expected:
+      - "Shows bulk_add for batch inserts"
+      - "Shows bulk_update for batch updates"
+      - "Shows bulk_delete for batch deletes"
