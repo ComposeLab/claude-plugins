@@ -1,0 +1,43 @@
+suite: python-concurrency-scenarios
+skill_path: ..
+
+config:
+  model: haiku
+  max_turns: 5
+  max_budget_usd: 0.50
+
+tests:
+  - name: skill can explain the GIL
+    prompt: "What is the Python GIL and how does it affect my multithreaded code?"
+    expected:
+      - "Explains GIL prevents true parallel execution of Python bytecode in threads"
+      - "Mentions that GIL is released during I/O operations"
+      - "Suggests multiprocessing for CPU-bound parallelism"
+
+  - name: skill can guide ThreadPoolExecutor usage
+    prompt: "I need to download 100 files concurrently using threads in Python"
+    expected:
+      - "Uses ThreadPoolExecutor or concurrent.futures"
+      - "Shows submit or map pattern"
+      - "Mentions thread pool size considerations"
+
+  - name: skill can guide multiprocessing for CPU work
+    prompt: "I need to process 1000 images in parallel using all CPU cores"
+    expected:
+      - "Uses multiprocessing or ProcessPoolExecutor"
+      - "Shows Pool.map or ProcessPoolExecutor pattern"
+      - "Mentions the if __name__ == '__main__' guard"
+
+  - name: skill can guide choosing concurrency model
+    prompt: "Should I use threading, multiprocessing, or asyncio for my web scraper?"
+    expected:
+      - "Identifies web scraping as I/O-bound"
+      - "Recommends asyncio or threading over multiprocessing"
+      - "Explains reasoning based on I/O-bound nature"
+
+  - name: skill can guide thread synchronization
+    prompt: "How do I safely share data between threads in Python?"
+    expected:
+      - "Uses threading.Lock or similar synchronization primitive"
+      - "Shows lock as context manager with 'with' statement"
+      - "Warns about race conditions or deadlocks"

@@ -1,0 +1,50 @@
+suite: python-asyncio-scenarios
+skill_path: ..
+
+config:
+  model: haiku
+  max_turns: 5
+  max_budget_usd: 0.50
+
+tests:
+  - name: skill can guide basic async function
+    prompt: "How do I write a basic async function in Python and run it?"
+    expected:
+      - "Shows async def syntax"
+      - "Uses asyncio.run() as entry point"
+      - "Demonstrates await usage"
+
+  - name: skill can guide concurrent task execution
+    prompt: "I need to make 10 HTTP requests concurrently using asyncio"
+    expected:
+      - "Uses asyncio.create_task or TaskGroup or gather"
+      - "Shows concurrent execution pattern"
+      - "Mentions error handling for failed tasks"
+
+  - name: skill can guide async rate limiting
+    prompt: "How do I limit concurrent operations to 5 at a time with asyncio?"
+    expected:
+      - "Uses asyncio.Semaphore"
+      - "Shows semaphore as context manager with async with"
+      - "Demonstrates limiting concurrent access"
+
+  - name: skill can explain async vs sync
+    prompt: "When should I use asyncio vs regular synchronous Python code?"
+    expected:
+      - "Mentions I/O-bound workloads as primary use case"
+      - "Explains that asyncio does not help with CPU-bound tasks"
+      - "References threading or multiprocessing for CPU-bound work"
+
+  - name: skill can guide error handling in async code
+    prompt: "How do I handle errors when running multiple async tasks?"
+    expected:
+      - "Shows try/except around awaited tasks"
+      - "Mentions CancelledError or task cancellation"
+      - "Addresses exception propagation from gathered tasks"
+
+  - name: skill can warn about common pitfalls
+    prompt: "What are common mistakes when writing async Python code?"
+    expected:
+      - "Mentions blocking the event loop with synchronous calls"
+      - "Mentions forgetting to await coroutines"
+      - "Mentions fire-and-forget tasks being garbage collected"

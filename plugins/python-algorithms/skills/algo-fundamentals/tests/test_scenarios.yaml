@@ -1,0 +1,50 @@
+suite: algo-fundamentals-scenarios
+skill_path: ..
+
+config:
+  model: haiku
+  max_turns: 8
+  max_budget_usd: 1.00
+
+tests:
+  - name: skill can implement binary search
+    prompt: "Implement binary search in Python that returns the index of a target value"
+    expected:
+      - "Shows iterative or recursive binary search implementation"
+      - "Uses low/high or left/right pointer approach"
+      - "Mentions O(log n) time complexity"
+
+  - name: skill can explain Big-O notation
+    prompt: "Explain Big-O notation and give examples of common complexity classes"
+    expected:
+      - "Defines Big-O as upper bound on growth rate"
+      - "Lists common classes like O(1), O(n), O(n log n), O(n²)"
+      - "Provides concrete algorithm examples for each class"
+
+  - name: skill can guide sorting algorithm selection
+    prompt: "I need to sort a large list of integers. What sorting algorithm should I use?"
+    expected:
+      - "Recommends Python built-in sort (Timsort) for general use"
+      - "Mentions O(n log n) average time complexity"
+      - "Discusses trade-offs if custom sort is needed"
+
+  - name: skill can implement merge sort
+    prompt: "Implement merge sort in Python and explain how it works"
+    expected:
+      - "Shows complete merge sort implementation with divide and conquer"
+      - "Includes the merge step combining two sorted halves"
+      - "Mentions O(n log n) time and O(n) space complexity"
+
+  - name: skill can guide two-pointer technique
+    prompt: "How do I find two numbers in a sorted array that sum to a target?"
+    expected:
+      - "Shows two-pointer approach from both ends"
+      - "Mentions O(n) time complexity"
+      - "Explains why pointers move inward based on sum comparison"
+
+  - name: skill can analyze nested loop complexity
+    prompt: "What is the time complexity of a nested for loop where both iterate over n elements?"
+    expected:
+      - "Identifies O(n²) time complexity"
+      - "Explains multiplication of inner and outer loop iterations"
+      - "Explains that the total iterations are n × n"

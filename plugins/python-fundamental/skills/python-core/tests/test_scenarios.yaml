@@ -1,0 +1,50 @@
+suite: python-core-scenarios
+skill_path: ..
+
+config:
+  model: haiku
+  max_turns: 5
+  max_budget_usd: 0.50
+
+tests:
+  - name: skill can guide writing a dataclass
+    prompt: "I need to create a data class to represent a Point with x and y coordinates in Python"
+    expected:
+      - "Uses @dataclass decorator or dataclasses module"
+      - "Shows type hints for fields"
+      - "Mentions frozen parameter or comparison features"
+
+  - name: skill can explain decorators
+    prompt: "Explain how Python decorators work and show me how to write one"
+    expected:
+      - "Explains that decorators wrap functions"
+      - "Shows a decorator function that takes a function as argument"
+      - "Uses functools.wraps or explains why it matters"
+
+  - name: skill can guide error handling
+    prompt: "How should I handle errors in Python? I'm coming from Java"
+    expected:
+      - "Explains try/except/else/finally pattern"
+      - "Mentions EAFP vs LBYL or Pythonic error handling style"
+      - "Shows catching specific exceptions rather than bare except"
+
+  - name: skill can guide generator usage
+    prompt: "I need to process a very large file line by line without loading it all into memory"
+    expected:
+      - "Shows generator or yield-based approach"
+      - "Mentions memory efficiency or lazy evaluation"
+      - "Uses with statement for file handling"
+
+  - name: skill can guide comprehension usage
+    prompt: "How do I filter and transform a list of dictionaries in Python?"
+    expected:
+      - "Shows list comprehension or dict comprehension"
+      - "Demonstrates conditional filtering with if clause"
+      - "Mentions readability considerations for complex cases"
+
+  - name: skill can guide OOP design
+    prompt: "I need to design a class hierarchy for shapes (circle, rectangle) with area calculation"
+    expected:
+      - "Shows class inheritance or ABC/Protocol pattern"
+      - "Includes type hints"
+      - "Shows method implementation for area calculation"

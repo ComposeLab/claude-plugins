@@ -1,0 +1,43 @@
+suite: algo-graphs-trees-scenarios
+skill_path: ..
+
+config:
+  model: haiku
+  max_turns: 8
+  max_budget_usd: 1.00
+
+tests:
+  - name: skill can implement BFS
+    prompt: "Implement BFS traversal for a graph in Python"
+    expected:
+      - "Uses a queue (deque or similar) for BFS"
+      - "Tracks visited nodes to avoid cycles"
+      - "Shows adjacency list or similar graph representation"
+
+  - name: skill can implement Dijkstra's algorithm
+    prompt: "Implement Dijkstra's shortest path algorithm in Python"
+    expected:
+      - "Uses a priority queue (heapq)"
+      - "Maintains distance dictionary"
+      - "Mentions O((V + E) log V) or similar complexity"
+
+  - name: skill can implement BST operations
+    prompt: "Implement a binary search tree with insert and search operations in Python"
+    expected:
+      - "Defines a Node class with left and right children"
+      - "Shows recursive or iterative insert maintaining BST property"
+      - "Shows search operation"
+
+  - name: skill can explain graph representations
+    prompt: "What are the different ways to represent a graph in Python and when should I use each?"
+    expected:
+      - "Describes adjacency list representation"
+      - "Describes adjacency matrix representation"
+      - "Explains trade-offs based on graph density"
+
+  - name: skill can guide heap usage
+    prompt: "How do I use a heap or priority queue in Python?"
+    expected:
+      - "Uses heapq module"
+      - "Shows heappush and heappop operations"
+      - "Mentions that Python heapq is a min-heap"

@@ -1,0 +1,50 @@
+suite: algo-paradigms-scenarios
+skill_path: ..
+
+config:
+  model: haiku
+  max_turns: 8
+  max_budget_usd: 1.00
+
+tests:
+  - name: skill can implement DP with memoization
+    prompt: "Implement the coin change problem using dynamic programming in Python"
+    expected:
+      - "Shows DP approach with memoization or tabulation"
+      - "Defines state and transition formula"
+      - "Handles base cases correctly"
+
+  - name: skill can guide paradigm selection
+    prompt: "I have a problem where I need to find the minimum cost path in a grid. Which algorithm paradigm should I use?"
+    expected:
+      - "Identifies this as a dynamic programming problem"
+      - "Mentions overlapping subproblems"
+      - "Shows state transition or recurrence relation"
+
+  - name: skill can implement backtracking
+    prompt: "Implement a solution to generate all permutations of a list using backtracking"
+    expected:
+      - "Uses backtracking pattern with choose-explore-unchoose"
+      - "Builds permutations recursively"
+      - "Shows base case when permutation is complete"
+
+  - name: skill can implement KMP or string matching
+    prompt: "Implement an efficient string matching algorithm in Python"
+    expected:
+      - "Shows KMP or Rabin-Karp algorithm"
+      - "Explains the preprocessing or failure function step"
+      - "Mentions O(n + m) or better than brute force complexity"
+
+  - name: skill can explain greedy vs DP
+    prompt: "When should I use a greedy algorithm vs dynamic programming?"
+    expected:
+      - "Explains greedy choice property"
+      - "Explains overlapping subproblems for DP"
+      - "Gives examples where greedy fails and DP is needed"
+
+  - name: skill can implement edit distance
+    prompt: "Implement the edit distance (Levenshtein distance) algorithm in Python"
+    expected:
+      - "Shows DP table or memoized approach"
+      - "Handles insert, delete, and replace operations"
+      - "Mentions O(mn) time complexity"
