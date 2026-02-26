@@ -21,6 +21,9 @@ Thumbs.db
 *.swo
 *~
 
+# Testing
+.test-history/
+
 # Environment
 .env
 .env.local

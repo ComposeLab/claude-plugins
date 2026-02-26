@@ -121,3 +121,11 @@ These checks flag potential quality issues. They produce WARN rather than FAIL b
 **Level:** WARN if detected.
 
 **Why:** The project convention uses explanation-focused writing rather than good/bad comparison lists. Comparison patterns indicate a file that teaches pattern-matching rather than understanding. This is a warning because there may be edge cases where a brief comparison is the clearest way to illustrate a point.
+
+### test-files-exist
+
+**Checks:** At least one `test_*.yaml` or `test_*.yml` file exists in the skill's `tests/` directory.
+
+**Level:** WARN if missing.
+
+**Why:** Validation checks structure; tests check behavior. A skill without tests may pass validation perfectly and still produce incorrect results when Claude uses it. This is a warning rather than a failure because skills in early development may not have tests yet, and the absence of tests does not prevent the skill from functioning — it just means behavior is unverified.

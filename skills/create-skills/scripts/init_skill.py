@@ -62,7 +62,7 @@ def main():
     content = content.replace("{{SKILL_DESCRIPTION}}", f"Provides {skill_name} functionality.")
 
     # Create directory structure
-    subdirs = ["references", "templates", "examples", "scripts"]
+    subdirs = ["references", "templates", "examples", "scripts", "tests"]
     for subdir in subdirs:
         (skill_dir / subdir).mkdir(parents=True, exist_ok=True)
 

@@ -43,7 +43,11 @@ Perform the main task. Consult [Reference Name](references/reference-name.md) fo
 
 Verify the output meets expectations.
 
-### Step 4: Present Results
+### Step 4: Test
+
+<!-- Tests live in tests/test_scenarios.yaml. See the test-writing-guide reference for format details. -->
+
+### Step 5: Present Results
 
 <!-- How does Claude communicate the outcome? -->
 

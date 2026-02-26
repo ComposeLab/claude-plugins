@@ -1,0 +1,54 @@
+suite: create-skills-scenarios
+skill_path: ..
+
+config:
+  model: haiku
+  max_turns: 5
+  max_budget_usd: 0.50
+
+tests:
+  - name: skill can guide creating a new skill
+    prompt: "I want to create a new skill called 'code-review'. Walk me through the process step by step, naming specific scripts and files."
+    expected:
+      - "Mentions capturing intent or understanding what the skill should do as an early step"
+      - "Mentions initializing or scaffolding the skill directory structure"
+      - "Mentions writing SKILL.md as the core skill file"
+      - "Mentions validating the skill for correctness as a later step"
+      - "Presents steps in a logical order from planning through validation"
+
+  - name: skill can guide writing frontmatter
+    prompt: "How do I write the frontmatter for a skill? What fields are required?"
+    expected:
+      - "Lists name, description, and version as required fields"
+      - "Explains kebab-case naming convention for the name field"
+      - "Mentions third-person perspective for descriptions"
+      - "References semver versioning"
+      - "Mentions trigger phrases"
+
+  - name: skill can guide writing a lean body
+    prompt: "What are the best practices for writing the SKILL.md body content?"
+    expected:
+      - "Mentions keeping the body under approximately 100 lines"
+      - "Recommends delegating detailed content to references/ directory"
+      - "Specifies using imperative form for instructions"
+      - "References progressive disclosure pattern"
+
+  - name: skill can guide validation
+    prompt: "How do I validate that my skill is correctly structured?"
+    expected:
+      - "References validate_skill.py as the validation tool"
+      - "Mentions PASS, WARN, and FAIL output levels"
+      - "Distinguishes between structural checks and quality heuristics"
+
+  - name: skill can guide using templates
+    prompt: "How do I use the skill template to get started? What placeholders are available?"
+    expected:
+      - "Mentions a templates directory or template files used for scaffolding"
+      - "Mentions placeholder variables that get substituted (e.g. skill name, date)"
+
+  - name: skill explains writing conventions
+    prompt: "What writing style and formatting conventions should I follow in skill documentation? Include how to reference other files."
+    expected:
+      - "Describes explanation-focused writing style"
+      - "Emphasizes explaining WHY conventions exist rather than listing examples"
+      - "Mentions using markdown links for file references rather than plain backtick code paths"
